@@ -109,7 +109,7 @@ While optimized for medical data, the system is **Dyanmic-domain-agnostic** — 
 
 ## ⚙️ Installation & Setup
 
-### 1️⃣ Clone the Repository
+### Clone the Repository
 ```bash
 git clone https://github.com/Gouravpanchal0601/AI-Insights-and-Analytics-Engine-Agent
 cd AI-Insights-and-Analytics-Engine-Agent
