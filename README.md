@@ -7,6 +7,16 @@ Built with **Streamlit**, **Plotly**, **Pandas**, and **OpenAI**, this system tr
 
 ---
 
+## 🎥 Working Demo Video
+
+🚀 **Try it here:** [AI Insights & Analytics Engine Demo URL](https://www.awesomescreenshot.com/video/46297939?key=822389b309ec7345b6a2e73cb502139e)
+*(Hosted via Ngrok / Streamlit Cloud)*
+
+> 💡 The demo includes default sample healthcare data (`doctor.csv`) — you can upload your own dataset too from the interface!
+> ⚡ To test the Agent instantly, simply use the live testing url. It’s fully web-based and requires no local setup or configuration.
+> 💬 For testing or collaboration inquiries, feel free to reach out via the contact details provided below (Gmail or LinkedIn).
+---
+
 ## 🧭 About the Project
 
 Modern organizations, especially in **healthcare**, generate enormous amounts of data daily — from patient records and staff logs to department-level performance metrics. However, **turning this raw data into actionable insights** remains a huge challenge.
@@ -111,10 +121,35 @@ While optimized for medical data, the system is **Dyanmic-domain-agnostic** — 
 
 ### Clone the Repository
 ```bash
-#Clone the repository
+# Clone the repository
 git clone https://github.com/Gouravpanchal0601/AI-Insights-and-Analytics-Engine-Agent
 cd AI-Insights-and-Analytics-Engine-Agent
 
-#create python environment
+# Create python environment
 python -m venv venv
 source venv/bin/activate
+
+# Install Requirements
+pip install -r requirements.txt
+
+# .env file set up
+OPENAI_API_KEY="your_openai_api_key"
+OPENAI_MODEL="gpt-4o-mini"
+HR_CSV_PATH="doctor.csv" # default file
+
+# run the application
+streamlit run main.py
+
+```
+
+---
+
+## 🎥 Working Demo Video
+
+- [Email](gourav.panchal0601@gmail.com)
+- [Linkedin](https://www.linkedin.com/in/gourav-panchal-4b899430a/)
+- [Github](https://github.com/Gouravpanchal0601)
+
+---
+
+## THANK YOU
