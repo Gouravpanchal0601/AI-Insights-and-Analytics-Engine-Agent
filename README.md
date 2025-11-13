@@ -13,7 +13,7 @@ Modern organizations, especially in **healthcare**, generate enormous amounts of
 
 This project was created to solve exactly that.
 
-**AI Insights & Analytics Engine** transforms static CSV files into **interactive dashboards** and **AI-assisted analytics systems** using:
+**AI Insights & Analytics EngineClone the Repository** transforms static CSV files into **interactive dashboards** and **AI-assisted analytics systems** using:
 - 💬 **Natural language queries**
 - 📈 **Intelligent visualizations**
 - 🧠 **OpenAI-powered reasoning**
@@ -111,6 +111,7 @@ While optimized for medical data, the system is **Dyanmic-domain-agnostic** — 
 
 ### Clone the Repository
 ```bash
+#Clone the repository
 git clone https://github.com/Gouravpanchal0601/AI-Insights-and-Analytics-Engine-Agent
 cd AI-Insights-and-Analytics-Engine-Agent
 
