@@ -113,3 +113,7 @@ While optimized for medical data, the system is **Dyanmic-domain-agnostic** — 
 ```bash
 git clone https://github.com/Gouravpanchal0601/AI-Insights-and-Analytics-Engine-Agent
 cd AI-Insights-and-Analytics-Engine-Agent
+
+#create python environment
+python -m venv venv
+source venv/bin/activate
