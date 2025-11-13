@@ -1,0 +1,434 @@
+import os
+import io
+import json
+import re
+from typing import Optional, Dict, Any, List, Tuple
+import pandas as pd
+import numpy as np
+import streamlit as st
+import plotly.express as px
+import plotly.graph_objects as go
+from dotenv import load_dotenv
+import openai
+
+load_dotenv()
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
+DEFAULT_CSV_PATH = "doctor.csv"  # Optional fallback
+PROMPTS_FILE = "prompts.json"
+
+if not OPENAI_API_KEY:
+    st.warning("⚠️ OPENAI_API_KEY environment variable not set. Set it before running.")
+else:
+    openai.api_key = OPENAI_API_KEY
+
+st.set_page_config(page_title="📊 AI Data Analytics Engine", layout="wide")
+
+@st.cache_data
+def load_csv(file_bytes: io.BytesIO) -> pd.DataFrame:
+    try:
+        file_bytes.seek(0)
+        df = pd.read_csv(file_bytes)
+        return df
+    except Exception:
+        file_bytes.seek(0)
+        df = pd.read_csv(file_bytes, encoding='latin1', low_memory=False)
+        return df
+
+def dataset_brief(df: pd.DataFrame, n_sample: int = 5) -> Dict[str, Any]:
+    brief = {'n_rows': len(df), 'n_cols': len(df.columns), 'columns': []}
+    for col in df.columns:
+        col_info = {"name": str(col), "dtype": str(df[col].dtype), "n_missing": int(df[col].isna().sum())}
+        if pd.api.types.is_numeric_dtype(df[col]):
+            nonnull = df[col].dropna()
+            if not nonnull.empty:
+                col_info.update({
+                    'mean': float(nonnull.mean()),
+                    'median': float(nonnull.median()),
+                    'std': float(nonnull.std()),
+                    'min': float(nonnull.min()),
+                    'max': float(nonnull.max()),
+                })
+        else:
+            nonnull = df[col].dropna().astype(str)
+            col_info.update({
+                'n_unique': int(nonnull.nunique()),
+                'top_values': list(nonnull.value_counts().head(5).index.astype(str))
+            })
+        brief['columns'].append(col_info)
+    brief['sample_rows'] = df.head(n_sample).to_dict(orient='records')
+    return brief
+
+def generate_intelligent_summary(df: pd.DataFrame) -> str:
+    """Generate a generic summary that works for any dataset"""
+    insights = [f"📊 **Dataset Overview**: {len(df):,} rows, {df.shape[1]} columns"]
+    
+    # Show numeric column statistics
+    numeric_cols = df.select_dtypes(include=[np.number]).columns
+    if len(numeric_cols) > 0:
+        insights.append(f"🔢 **Numeric Columns**: {len(numeric_cols)}")
+    
+    # Show categorical column statistics
+    cat_cols = df.select_dtypes(exclude=[np.number]).columns
+    if len(cat_cols) > 0:
+        insights.append(f"📝 **Categorical Columns**: {len(cat_cols)}")
+    
+    # Show missing data percentage
+    missing_pct = (df.isna().sum().sum() / (df.shape[0] * df.shape[1])) * 100
+    if missing_pct > 0:
+        insights.append(f"⚠️ **Missing Data**: {missing_pct:.1f}%")
+    
+    # Auto-detect interesting patterns in top columns
+    if len(df.columns) > 0:
+        first_col = df.columns[0]
+        if df[first_col].dtype == 'object':
+            unique_count = df[first_col].nunique()
+            insights.append(f"🎯 **'{first_col}' has {unique_count} unique values**")
+    
+    return "\n\n".join(insights)
+
+def plot_histogram(df, col):
+    return px.histogram(df, x=col, marginal="box", nbins=40, title=f"Distribution of {col}")
+
+def plot_scatter(df, x, y, color=None):
+    return px.scatter(df, x=x, y=y, color=color, title=f"{y} vs {x}")
+
+def plot_correlation_heatmap(df):
+    df_num = df.select_dtypes(include=[np.number])
+    if df_num.empty or len(df_num.columns) < 2:
+        return None
+    corr = df_num.corr()
+    fig = px.imshow(corr, text_auto='.2f', aspect="auto", title="Correlation Matrix")
+    return fig
+
+def generate_dynamic_system_prompt(df: pd.DataFrame) -> str:
+    """Generate a smart system prompt based on the uploaded dataset"""
+    
+    # Get dataset characteristics
+    cols_info = []
+    for col in df.columns[:20]:  # Limit to first 20 columns for prompt brevity
+        dtype = df[col].dtype
+        if pd.api.types.is_numeric_dtype(df[col]):
+            stats = f"(mean: {df[col].mean():.2f}, range: {df[col].min():.1f}-{df[col].max():.1f})"
+            cols_info.append(f"- {col}: numeric {stats}")
+        else:
+            unique = df[col].nunique()
+            sample_vals = df[col].dropna().astype(str).value_counts().head(3).index.tolist()
+            cols_info.append(f"- {col}: categorical ({unique} unique values, e.g., {', '.join(sample_vals[:3])})")
+    
+    columns_desc = "\n".join(cols_info)
+    
+    prompt = f"""You are an expert data analyst assistant helping users analyze their dataset.
+
+DATASET INFORMATION:
+- Total rows: {len(df):,}
+- Total columns: {len(df.columns)}
+
+COLUMNS:
+{columns_desc}
+
+YOUR CAPABILITIES:
+1. **Data Filtering & Queries**: Answer questions about the data, filter rows based on conditions
+2. **Visualizations**: Suggest and create charts (histograms, scatter plots, bar charts, pie charts)
+3. **Statistical Analysis**: Calculate means, correlations, distributions, trends
+4. **General Knowledge**: Answer domain-related questions even if not directly in the data
+5. **Data Insights**: Identify patterns, anomalies, and provide actionable insights
+
+RESPONSE FORMAT:
+- For data queries: Provide clear natural language response, then add QUERY: followed by a JSON filter
+- For visualizations: Suggest chart types and columns to use
+- For general questions: Provide informative answers based on your knowledge
+- Always be helpful even if the user's question is vague or poorly worded
+
+QUERY JSON FORMAT (when filtering data):
+QUERY: {{"column_name": "value"}} for exact/partial match
+QUERY: {{"column_name": {{"$gt": value}}}} for greater than
+QUERY: {{"column_name": {{"$lt": value}}}} for less than
+
+EXAMPLES:
+- "Show me records where X is above 100" → Natural answer + QUERY: {{"X": {{"$gt": 100}}}}
+- "What does Y mean?" → Explain Y conceptually using your knowledge
+- "Plot A vs B" → "I recommend a scatter plot of A vs B to see the relationship"
+- "Find all Z containing 'keyword'" → Natural answer + QUERY: {{"Z": "keyword"}}
+
+IMPORTANT:
+- Understand user intent even with unclear phrasing
+- Be conversational and helpful
+- Provide insights beyond just filtering data
+- Suggest next steps or additional analyses when relevant"""
+
+    return prompt
+
+def load_or_generate_prompt(df: pd.DataFrame = None) -> str:
+    """Load custom prompt from file, or generate dynamic one from dataset"""
+    try:
+        with open(PROMPTS_FILE, "r", encoding="utf-8") as f:
+            data = json.load(f)
+            custom_prompt = data.get("system_prompt", "")
+            if custom_prompt.strip():
+                return custom_prompt
+    except FileNotFoundError:
+        pass
+    except Exception as e:
+        st.warning(f"⚠️ Error reading {PROMPTS_FILE}: {e}")
+    
+    # Generate dynamic prompt if no custom one exists
+    if df is not None:
+        return generate_dynamic_system_prompt(df)
+    
+    return "You are an expert data analyst assistant."
+
+def save_prompt_to_json(prompt: str, file_path: str = PROMPTS_FILE):
+    """Save the updated prompt to JSON file."""
+    try:
+        data = {"system_prompt": prompt}
+        with open(file_path, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=2, ensure_ascii=False)
+        return True
+    except Exception as e:
+        st.error(f"Error saving prompt: {e}")
+        return False
+
+def call_openai_chat(system: str, user_prompt: str, model: str = OPENAI_MODEL, max_tokens: int = 1000) -> str:
+    if not openai.api_key:
+        return "⚠️ Missing API key."
+    try:
+        resp = openai.ChatCompletion.create(
+            model=model,
+            messages=[{"role": "system", "content": system}, {"role": "user", "content": user_prompt}],
+            temperature=0.3,
+            max_tokens=max_tokens,
+        )
+        return resp.choices[0].message.content.strip()
+    except Exception as e:
+        return f"OpenAI request failed: {e}"
+
+def parse_query_from_response(response: str) -> Optional[Dict[str, Any]]:
+    if not response or "QUERY:" not in response:
+        return None
+    try:
+        query_part = response.split("QUERY:")[1].strip()
+        json_match = re.search(r'\{.*\}', query_part, re.DOTALL)
+        if json_match:
+            return json.loads(json_match.group())
+    except Exception:
+        return None
+    return None
+
+# Main UI
+st.title("📊 AI Data Analytics Engine")
+st.markdown("Upload any CSV file to explore, visualize, and chat with your data using AI.")
+
+# Sidebar
+with st.sidebar:
+    st.header("⚙️ Settings")
+    max_sample = st.number_input("Rows to show in sample", value=5, min_value=1, step=1)
+    show_heatmap = st.checkbox("Show correlation heatmap", value=True)
+    
+    st.markdown("---")
+    
+    # File upload in sidebar for better UX
+    uploaded_file = st.file_uploader("📁 Upload CSV", type=["csv"])
+    
+    st.markdown("---")
+    
+    with st.expander("🤖 AI Prompt Editor (Advanced)", expanded=False):
+        st.markdown("**Edit the system prompt** or let AI auto-generate based on your data:")
+        
+        # We'll load the actual prompt after we have the dataframe
+        st.info("💡 Leave blank to auto-generate smart prompts based on your data!")
+        
+        try:
+            with open(PROMPTS_FILE, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                current_custom_prompt = data.get("system_prompt", "")
+        except:
+            current_custom_prompt = ""
+        
+        edited_prompt = st.text_area(
+            "Custom System Prompt (optional)",
+            value=current_custom_prompt,
+            height=250,
+            help="Leave empty to auto-generate intelligent prompts based on your dataset",
+            key="prompt_editor",
+            placeholder="Leave blank for auto-generated prompts..."
+        )
+        
+        col_save, col_clear = st.columns(2)
+        
+        with col_save:
+            if st.button("💾 Save Custom", type="primary", use_container_width=True):
+                if save_prompt_to_json(edited_prompt):
+                    st.success("✅ Saved!")
+                    st.rerun()
+        
+        with col_clear:
+            if st.button("🔄 Clear (Use Auto)", use_container_width=True):
+                if save_prompt_to_json(""):
+                    st.success("✅ Will auto-generate!")
+                    st.rerun()
+
+# Load data
+if uploaded_file:
+    df = load_csv(uploaded_file)
+    st.success(f"✅ Loaded: {uploaded_file.name}")
+else:
+    if os.path.exists(DEFAULT_CSV_PATH):
+        df = pd.read_csv(DEFAULT_CSV_PATH, low_memory=False)
+        st.info(f"📂 Using example dataset: {DEFAULT_CSV_PATH}")
+    else:
+        st.warning("👆 Please upload a CSV file to begin analysis")
+        st.stop()
+
+# Dataset Summary
+st.subheader("📊 Dataset Overview")
+st.markdown(generate_intelligent_summary(df))
+
+col1, col2, col3 = st.columns(3)
+with col1:
+    st.metric("Total Rows", f"{df.shape[0]:,}")
+with col2:
+    st.metric("Total Columns", df.shape[1])
+with col3:
+    st.metric("Missing Values", int(df.isna().sum().sum()))
+
+st.dataframe(df.head(max_sample), use_container_width=True)
+
+numeric_cols = df.select_dtypes(include=[np.number]).columns.tolist()
+cat_cols = df.select_dtypes(exclude=[np.number]).columns.tolist()
+
+# Visualizations
+st.markdown("---")
+st.subheader("📈 Interactive Visualizations")
+
+tab1, tab2, tab3, tab4 = st.tabs(["📊 Histogram", "🔵 Scatter", "📉 Bar", "🥧 Pie"])
+
+with tab1:
+    if numeric_cols:
+        col = st.selectbox("Select numeric column", numeric_cols)
+        st.plotly_chart(plot_histogram(df, col), use_container_width=True)
+    else:
+        st.info("No numeric columns available for histogram.")
+
+with tab2:
+    if len(numeric_cols) >= 2:
+        x = st.selectbox("X-axis", numeric_cols, key="xaxis")
+        y = st.selectbox("Y-axis", numeric_cols, key="yaxis")
+        color = st.selectbox("Color by (optional)", [None] + cat_cols, index=0)
+        st.plotly_chart(plot_scatter(df, x, y, color if color else None), use_container_width=True)
+    else:
+        st.info("Need at least two numeric columns for scatter plot.")
+
+with tab3:
+    if cat_cols and numeric_cols:
+        x = st.selectbox("Categorical column", cat_cols, key="barx")
+        y = st.selectbox("Numeric column", numeric_cols, key="bary")
+        agg = st.selectbox("Aggregation", ["sum", "mean", "count"], index=1)
+        agg_df = df.groupby(x)[y].agg(agg).reset_index()
+        st.plotly_chart(px.bar(agg_df, x=x, y=y, title=f"{agg.capitalize()} of {y} by {x}"), use_container_width=True)
+    else:
+        st.info("Need both categorical and numeric columns for bar chart.")
+
+with tab4:
+    if cat_cols:
+        col = st.selectbox("Select categorical column", cat_cols, key="pie")
+        pie_data = df[col].value_counts().head(10).reset_index()
+        pie_data.columns = [col, "count"]
+        st.plotly_chart(px.pie(pie_data, names=col, values="count", title=f"Distribution of {col}"), use_container_width=True)
+    else:
+        st.info("No categorical columns available for pie chart.")
+
+if show_heatmap:
+    fig = plot_correlation_heatmap(df)
+    if fig:
+        st.plotly_chart(fig, use_container_width=True)
+
+# Chat Interface
+st.markdown("---")
+st.subheader("💬 Chat with Your Data")
+
+if "chat_history" not in st.session_state:
+    st.session_state.chat_history = []
+
+# Generate dynamic examples based on data
+example_questions = []
+if numeric_cols:
+    example_questions.append(f"Show records where {numeric_cols[0]} > average")
+if cat_cols:
+    top_val = df[cat_cols[0]].value_counts().index[0] if len(df[cat_cols[0]].value_counts()) > 0 else "value"
+    example_questions.append(f"Filter by {cat_cols[0]} = '{top_val}'")
+if len(numeric_cols) >= 2:
+    example_questions.append(f"Plot {numeric_cols[0]} vs {numeric_cols[1]}")
+
+examples_text = " • ".join(example_questions[:3]) if example_questions else "Ask anything about your data!"
+
+user_question = st.text_input(
+    f"💭 Ask anything about your data:",
+    key="chat",
+    placeholder=f"e.g., {examples_text}"
+)
+
+if st.button("🚀 Send", type="primary") and user_question:
+    st.session_state.chat_history.append(("user", user_question))
+    
+    # Get or generate system prompt
+    sys_prompt = load_or_generate_prompt(df)
+    
+    # Build context
+    brief = dataset_brief(df, n_sample=3)
+    context_text = f"Dataset: {len(df):,} rows, {len(df.columns)} columns.\nColumns: {', '.join(df.columns)}"
+    
+    user_prompt = f"{context_text}\n\nUser question: {user_question}"
+    
+    response = call_openai_chat(sys_prompt, user_prompt)
+    st.session_state.chat_history.append(("assistant", response))
+    
+    # Try extracting and executing query
+    query_dict = parse_query_from_response(response)
+    if query_dict:
+        try:
+            filtered = df.copy()
+            for col, condition in query_dict.items():
+                if col in filtered.columns:
+                    if isinstance(condition, dict):
+                        op = list(condition.keys())[0]
+                        val = condition[op]
+                        if op == "$gt":
+                            filtered = filtered[pd.to_numeric(filtered[col], errors='coerce') > val]
+                        elif op == "$lt":
+                            filtered = filtered[pd.to_numeric(filtered[col], errors='coerce') < val]
+                        elif op == "$gte":
+                            filtered = filtered[pd.to_numeric(filtered[col], errors='coerce') >= val]
+                        elif op == "$lte":
+                            filtered = filtered[pd.to_numeric(filtered[col], errors='coerce') <= val]
+                        elif op == "$eq":
+                            filtered = filtered[filtered[col].astype(str).str.lower() == str(val).lower()]
+                    else:
+                        filtered = filtered[filtered[col].astype(str).str.contains(str(condition), case=False, na=False)]
+            
+            if len(filtered) > 0:
+                st.session_state.chat_history.append(("dataframe", filtered))
+            else:
+                st.session_state.chat_history.append(("assistant", "⚠️ No records match the filter criteria."))
+        except Exception as e:
+            st.session_state.chat_history.append(("assistant", f"⚠️ Could not filter data: {e}"))
+
+# Display chat history
+if st.session_state.chat_history:
+    st.markdown("### 💬 Conversation History")
+    for item in st.session_state.chat_history:
+        if item[0] == "user":
+            st.markdown(f"**👤 You:** {item[1]}")
+        elif item[0] == "assistant":
+            st.markdown(f"**🤖 AI:** {item[1]}")
+        elif item[0] == "dataframe":
+            st.dataframe(item[1], use_container_width=True)
+            st.caption(f"📊 Showing {len(item[1])} matching records")
+    
+    if st.button("🗑️ Clear Chat History"):
+        st.session_state.chat_history = []
+        st.rerun()
+
+# Footer
+st.markdown("---")
+st.markdown("💡 **Tip:** The AI automatically adapts to your dataset structure and content!")
