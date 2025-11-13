@@ -1,0 +1,141 @@
+patient_id,age,gender,diagnosis,severity_level,treatment_given,doctor_id,department,readmitted,stay_days,medication_cost,total_bill,satisfaction_score,follow_up_required,discharge_status,admission_date,discharge_date,hospital_branch,insurance_covered,risk_score
+101,65,M,Heart Disease,High,Angioplasty,D101,Cardiology,Yes,12,25000,78000,7,Yes,Stable,2025-01-03,2025-01-15,Central,Yes,0.85
+102,40,F,Diabetes,Moderate,Insulin Therapy,D205,Endocrinology,No,5,8000,22000,9,No,Stable,2025-01-05,2025-01-10,East,Yes,0.22
+103,72,M,Heart Disease,Critical,Bypass Surgery,D101,Cardiology,Yes,15,45000,125000,6,Yes,Recovered,2025-01-07,2025-01-22,Central,No,0.92
+104,55,F,Hypertension,Moderate,Blood Pressure Control,D207,Internal Medicine,No,6,6000,18000,8,No,Stable,2025-01-09,2025-01-15,West,Yes,0.33
+105,63,M,Stroke,High,Clot Removal Surgery,D102,Neurology,Yes,14,32000,95000,6,Yes,Recovered,2025-01-11,2025-01-25,North,No,0.88
+106,29,F,Asthma,Mild,Bronchodilator Therapy,D210,Pulmonology,No,3,4000,12000,9,No,Stable,2025-01-12,2025-01-15,East,Yes,0.1
+107,47,M,Diabetes,Moderate,Insulin Adjustment,D205,Endocrinology,Yes,8,7000,19000,7,Yes,Stable,2025-01-13,2025-01-21,Central,Yes,0.45
+108,78,F,Heart Disease,Critical,Pacemaker Implant,D101,Cardiology,Yes,18,48000,135000,5,Yes,Recovered,2025-01-14,2025-02-01,Central,No,0.95
+109,36,F,Migraine,Mild,Pain Management,D215,Neurology,No,2,2500,8000,10,No,Stable,2025-01-15,2025-01-17,East,Yes,0.12
+110,59,M,Arthritis,Moderate,Joint Therapy,D208,Orthopedics,No,7,5500,20000,8,No,Stable,2025-01-16,2025-01-23,West,Yes,0.28
+111,70,F,Heart Failure,High,Medication + Monitoring,D101,Cardiology,Yes,11,22000,70000,6,Yes,Stable,2025-01-17,2025-01-28,Central,No,0.81
+112,45,M,Chronic Kidney Disease,High,Dialysis,D212,Nephrology,Yes,10,30000,85000,7,Yes,Stable,2025-01-18,2025-01-28,North,Yes,0.77
+113,53,F,Breast Cancer,Critical,Chemotherapy,D220,Oncology,Yes,20,52000,160000,6,Yes,Under Observation,2025-01-19,2025-02-08,East,No,0.91
+114,33,F,Anemia,Mild,Iron Supplements,D207,Internal Medicine,No,4,2000,9000,9,No,Stable,2025-01-20,2025-01-24,West,Yes,0.15
+115,68,M,Pneumonia,High,Antibiotic Treatment,D210,Pulmonology,Yes,9,10000,30000,7,Yes,Recovered,2025-01-21,2025-01-30,North,Yes,0.79
+116,51,F,Diabetes,Moderate,Insulin + Diet Plan,D205,Endocrinology,No,5,8500,25000,9,No,Stable,2025-01-22,2025-01-27,East,Yes,0.38
+117,62,M,Liver Disease,High,Liver Function Therapy,D214,Gastroenterology,Yes,12,28000,88000,7,Yes,Stable,2025-01-23,2025-02-04,West,No,0.82
+118,41,M,Back Pain,Moderate,Physiotherapy,D208,Orthopedics,No,6,3500,15000,8,No,Stable,2025-01-24,2025-01-30,West,Yes,0.25
+119,75,F,Alzheimer's,Critical,Cognitive Therapy,D102,Neurology,Yes,16,27000,95000,5,Yes,Under Observation,2025-01-25,2025-02-10,North,No,0.94
+120,58,M,Heart Disease,High,Stent Placement,D101,Cardiology,Yes,10,26000,82000,7,Yes,Recovered,2025-01-26,2025-02-05,Central,Yes,0.86
+121,50,F,Thyroid Disorder,Moderate,Hormone Therapy,D205,Endocrinology,No,5,7000,21000,8,No,Stable,2025-01-27,2025-02-01,East,Yes,0.34
+122,38,M,Appendicitis,Moderate,Appendectomy,D211,Surgery,No,6,12000,40000,9,No,Recovered,2025-01-28,2025-02-03,West,Yes,0.48
+123,64,F,Chronic Bronchitis,High,Bronchodilator Therapy,D210,Pulmonology,Yes,10,15000,42000,7,Yes,Stable,2025-01-29,2025-02-08,North,No,0.75
+124,27,F,PCOS,Mild,Hormonal Treatment,D205,Endocrinology,No,4,5000,16000,9,No,Stable,2025-01-30,2025-02-03,East,Yes,0.18
+125,73,M,Heart Failure,Critical,Cardiac Support,D101,Cardiology,Yes,17,35000,110000,6,Yes,Under Observation,2025-01-31,2025-02-17,Central,No,0.9
+126,46,M,Hepatitis B,Moderate,Antiviral Therapy,D214,Gastroenterology,No,8,9000,28000,8,No,Stable,2025-02-01,2025-02-09,West,Yes,0.42
+127,57,F,Osteoporosis,Moderate,Calcium Therapy,D208,Orthopedics,No,6,4000,18000,9,No,Stable,2025-02-02,2025-02-08,West,Yes,0.29
+128,69,M,Parkinson’s Disease,High,Neurotherapy,D102,Neurology,Yes,12,18000,60000,7,Yes,Stable,2025-02-03,2025-02-15,North,No,0.83
+129,34,F,Depression,Moderate,CBT + Medication,D218,Psychiatry,Yes,9,6000,25000,8,Yes,Stable,2025-02-04,2025-02-13,East,Yes,0.4
+130,44,M,Gastric Ulcer,Mild,Acid Control Medication,D214,Gastroenterology,No,4,3000,11000,9,No,Stable,2025-02-05,2025-02-09,West,Yes,0.21
+131,61,F,Heart Disease,High,Valve Replacement,D101,Cardiology,Yes,14,32000,98000,6,Yes,Recovered,2025-02-06,2025-02-20,Central,No,0.87
+132,31,M,Anxiety,Mild,Behavioral Therapy,D218,Psychiatry,No,3,2000,9000,9,No,Stable,2025-02-07,2025-02-10,East,Yes,0.17
+133,48,F,Asthma,Moderate,Inhaler Therapy,D210,Pulmonology,No,5,5000,16000,8,No,Stable,2025-02-08,2025-02-13,West,Yes,0.3
+134,67,M,Stroke,Critical,ICU + Neuro Rehab,D102,Neurology,Yes,19,36000,120000,5,Yes,Under Observation,2025-02-09,2025-02-28,North,No,0.93
+135,55,F,Lung Infection,High,Antibiotic Course,D210,Pulmonology,Yes,11,12000,34000,7,Yes,Recovered,2025-02-10,2025-02-21,North,Yes,0.76
+136,63,M,Colon Cancer,Critical,Surgery + Chemo,D220,Oncology,Yes,21,54000,175000,6,Yes,Stable,2025-02-11,2025-03-04,East,No,0.92
+137,39,F,Skin Allergy,Mild,Allergen Control,D209,Dermatology,No,2,1500,7000,10,No,Stable,2025-02-12,2025-02-14,West,Yes,0.11
+138,76,M,Diabetes,Critical,Insulin Pump,D205,Endocrinology,Yes,15,16000,55000,6,Yes,Stable,2025-02-13,2025-02-28,East,No,0.89
+139,54,F,Liver Cirrhosis,High,Liver Detox,D214,Gastroenterology,Yes,12,26000,86000,7,Yes,Stable,2025-02-14,2025-02-26,West,Yes,0.8
+140,42,M,Fracture,Moderate,Bone Plating Surgery,D208,Orthopedics,No,8,18000,52000,8,No,Recovered,2025-02-15,2025-02-23,West,Yes,0.35
+141,66,F,Heart Disease,High,Angioplasty,D101,Cardiology,Yes,13,24000,76000,7,Yes,Stable,2025-02-16,2025-02-28,Central,Yes,0.84
+142,58,M,Diabetes,Moderate,Insulin Regulation,D205,Endocrinology,No,5,8200,23000,9,No,Stable,2025-02-17,2025-02-22,East,Yes,0.36
+143,74,F,Stroke,Critical,ICU Treatment,D102,Neurology,Yes,20,37000,122000,6,Yes,Recovered,2025-02-18,2025-03-10,North,No,0.91
+144,32,M,Asthma,Mild,Breathing Exercise,D210,Pulmonology,No,3,3500,10000,10,No,Stable,2025-02-19,2025-02-22,East,Yes,0.14
+145,47,F,Hypertension,Moderate,Medication Control,D207,Internal Medicine,No,6,5800,17500,8,No,Stable,2025-02-20,2025-02-26,West,Yes,0.29
+146,61,M,Heart Failure,High,Medication + Monitoring,D101,Cardiology,Yes,12,23000,71000,7,Yes,Stable,2025-02-21,2025-03-05,Central,No,0.79
+147,43,F,Anemia,Mild,Iron Therapy,D207,Internal Medicine,No,4,2200,9500,9,No,Stable,2025-02-22,2025-02-26,West,Yes,0.19
+148,69,M,Pneumonia,High,Antibiotic + Oxygen,D210,Pulmonology,Yes,10,12000,31000,7,Yes,Recovered,2025-02-23,2025-03-05,North,Yes,0.77
+149,56,F,Breast Cancer,Critical,Radiation Therapy,D220,Oncology,Yes,18,50000,155000,6,Yes,Stable,2025-02-24,2025-03-14,East,No,0.88
+150,39,M,Hepatitis C,Moderate,Antiviral Therapy,D214,Gastroenterology,No,8,8800,29000,8,No,Stable,2025-02-25,2025-03-05,West,Yes,0.41
+151,28,F,Migraine,Mild,Pain Management,D215,Neurology,No,2,2000,8500,10,No,Stable,2025-02-26,2025-02-28,East,Yes,0.11
+152,72,M,Heart Disease,Critical,Bypass Surgery,D101,Cardiology,Yes,16,47000,130000,6,Yes,Recovered,2025-02-27,2025-03-15,Central,No,0.93
+153,59,F,Arthritis,Moderate,Joint Therapy,D208,Orthopedics,No,7,5600,21000,8,No,Stable,2025-02-28,2025-03-07,West,Yes,0.32
+154,46,M,Liver Disease,High,Liver Detox,D214,Gastroenterology,Yes,11,28500,88000,7,Yes,Stable,2025-03-01,2025-03-12,West,No,0.81
+155,67,F,Heart Failure,High,Medication + Care,D101,Cardiology,Yes,12,23000,69000,6,Yes,Stable,2025-03-02,2025-03-14,Central,Yes,0.8
+156,31,F,PCOS,Mild,Hormonal Regulation,D205,Endocrinology,No,4,4800,15000,9,No,Stable,2025-03-03,2025-03-07,East,Yes,0.16
+157,78,M,Alzheimer's,Critical,Cognitive Care,D102,Neurology,Yes,17,28000,97000,5,Yes,Under Observation,2025-03-04,2025-03-21,North,No,0.95
+158,41,F,Thyroid Disorder,Moderate,Hormone Therapy,D205,Endocrinology,No,5,7100,22000,9,No,Stable,2025-03-05,2025-03-10,East,Yes,0.37
+159,35,M,Anxiety,Mild,Behavioral Therapy,D218,Psychiatry,No,3,1800,8500,9,No,Stable,2025-03-06,2025-03-09,East,Yes,0.13
+160,53,F,Asthma,Moderate,Inhaler Therapy,D210,Pulmonology,No,5,5200,16500,8,No,Stable,2025-03-07,2025-03-12,West,Yes,0.28
+161,64,M,Stroke,High,Rehabilitation,D102,Neurology,Yes,14,31000,94000,7,Yes,Recovered,2025-03-08,2025-03-22,North,No,0.86
+162,45,F,Skin Allergy,Mild,Allergen Therapy,D209,Dermatology,No,2,1400,6800,10,No,Stable,2025-03-09,2025-03-11,West,Yes,0.12
+163,69,M,Colon Cancer,Critical,Surgery + Chemo,D220,Oncology,Yes,22,56000,180000,6,Yes,Stable,2025-03-10,2025-04-01,East,No,0.94
+164,52,F,Lung Infection,High,Antibiotic Course,D210,Pulmonology,Yes,11,11500,33500,7,Yes,Recovered,2025-03-11,2025-03-22,North,Yes,0.78
+165,38,M,Back Pain,Moderate,Physiotherapy,D208,Orthopedics,No,6,3700,15500,8,No,Stable,2025-03-12,2025-03-18,West,Yes,0.31
+166,74,F,Heart Disease,Critical,Pacemaker Implant,D101,Cardiology,Yes,18,49000,137000,5,Yes,Recovered,2025-03-13,2025-03-31,Central,No,0.92
+167,60,M,Liver Cirrhosis,High,Liver Therapy,D214,Gastroenterology,Yes,12,27500,87000,7,Yes,Stable,2025-03-14,2025-03-26,West,Yes,0.83
+168,33,F,Depression,Moderate,CBT Sessions,D218,Psychiatry,Yes,9,6100,25500,8,Yes,Stable,2025-03-15,2025-03-24,East,Yes,0.39
+169,48,M,Arthritis,Moderate,Physiotherapy,D208,Orthopedics,No,7,5300,19500,9,No,Stable,2025-03-16,2025-03-23,West,Yes,0.33
+170,71,F,Heart Failure,High,Medication Care,D101,Cardiology,Yes,11,22500,72000,6,Yes,Stable,2025-03-17,2025-03-28,Central,No,0.81
+171,57,M,Chronic Kidney Disease,High,Dialysis,D212,Nephrology,Yes,13,31000,87000,7,Yes,Stable,2025-03-18,2025-03-31,North,Yes,0.79
+172,29,F,Anemia,Mild,Iron Supplements,D207,Internal Medicine,No,3,2100,9200,9,No,Stable,2025-03-19,2025-03-22,West,Yes,0.14
+173,65,M,Heart Disease,High,Angioplasty,D101,Cardiology,Yes,12,25500,79000,7,Yes,Stable,2025-03-20,2025-04-01,Central,Yes,0.85
+174,42,F,Diabetes,Moderate,Insulin Therapy,D205,Endocrinology,No,5,8300,22500,9,No,Stable,2025-03-21,2025-03-26,East,Yes,0.35
+175,68,M,Stroke,High,Clot Removal Surgery,D102,Neurology,Yes,14,32500,97000,6,Yes,Recovered,2025-03-22,2025-04-05,North,No,0.89
+176,36,F,Asthma,Mild,Bronchodilator Therapy,D210,Pulmonology,No,3,4100,12500,9,No,Stable,2025-03-23,2025-03-26,East,Yes,0.16
+177,47,M,Liver Disease,High,Liver Detox,D214,Gastroenterology,Yes,11,28500,88000,7,Yes,Stable,2025-03-24,2025-04-04,West,No,0.82
+178,53,F,Breast Cancer,Critical,Chemotherapy,D220,Oncology,Yes,20,53000,162000,6,Yes,Under Observation,2025-03-25,2025-04-14,East,No,0.9
+179,59,M,Heart Failure,High,Medication Monitoring,D101,Cardiology,Yes,11,23500,71000,6,Yes,Stable,2025-03-26,2025-04-06,Central,Yes,0.8
+180,50,F,Diabetes,Moderate,Insulin + Diet Plan,D205,Endocrinology,No,5,8700,24000,9,No,Stable,2025-03-27,2025-04-01,East,Yes,0.36
+181,62,M,Stroke,High,Rehabilitation,D102,Neurology,Yes,13,31000,94000,7,Yes,Recovered,2025-04-02,2025-04-15,North,No,0.87
+182,44,F,Skin Allergy,Mild,Allergen Therapy,D209,Dermatology,No,2,1400,6800,10,No,Stable,2025-04-03,2025-04-05,West,Yes,0.13
+183,68,M,Colon Cancer,Critical,Surgery + Chemo,D220,Oncology,Yes,22,56000,180000,6,Yes,Stable,2025-04-04,2025-04-26,East,No,0.93
+184,51,F,Lung Infection,High,Antibiotic Course,D210,Pulmonology,Yes,11,11500,33500,7,Yes,Recovered,2025-04-05,2025-04-16,North,Yes,0.79
+185,37,M,Back Pain,Moderate,Physiotherapy,D208,Orthopedics,No,6,3700,15500,8,No,Stable,2025-04-06,2025-04-12,West,Yes,0.34
+186,73,F,Heart Disease,Critical,Pacemaker Implant,D101,Cardiology,Yes,18,49000,137000,5,Yes,Recovered,2025-04-07,2025-04-25,Central,No,0.92
+187,59,M,Liver Cirrhosis,High,Liver Therapy,D214,Gastroenterology,Yes,12,27500,87000,7,Yes,Stable,2025-04-08,2025-04-20,West,Yes,0.84
+188,34,F,Depression,Moderate,CBT Sessions,D218,Psychiatry,Yes,9,6100,25500,8,Yes,Stable,2025-04-09,2025-04-18,East,Yes,0.42
+189,49,M,Arthritis,Moderate,Physiotherapy,D208,Orthopedics,No,7,5300,19500,9,No,Stable,2025-04-10,2025-04-17,West,Yes,0.38
+190,72,F,Heart Failure,High,Medication Care,D101,Cardiology,Yes,11,22500,72000,6,Yes,Stable,2025-04-11,2025-04-22,Central,No,0.81
+191,56,M,Chronic Kidney Disease,High,Dialysis,D212,Nephrology,Yes,13,31000,87000,7,Yes,Stable,2025-04-12,2025-04-25,North,Yes,0.78
+192,30,F,Anemia,Mild,Iron Supplements,D207,Internal Medicine,No,3,2100,9200,9,No,Stable,2025-04-13,2025-04-16,West,Yes,0.16
+193,66,M,Heart Disease,High,Angioplasty,D101,Cardiology,Yes,12,25500,79000,7,Yes,Stable,2025-04-14,2025-04-26,Central,Yes,0.85
+194,43,F,Diabetes,Moderate,Insulin Therapy,D205,Endocrinology,No,5,8300,22500,9,No,Stable,2025-04-15,2025-04-20,East,Yes,0.37
+195,69,M,Stroke,High,Clot Removal Surgery,D102,Neurology,Yes,14,32500,97000,6,Yes,Recovered,2025-04-16,2025-04-30,North,No,0.88
+196,35,F,Asthma,Mild,Bronchodilator Therapy,D210,Pulmonology,No,3,4100,12500,9,No,Stable,2025-04-17,2025-04-20,East,Yes,0.17
+197,48,M,Liver Disease,High,Liver Detox,D214,Gastroenterology,Yes,11,28500,88000,7,Yes,Stable,2025-04-18,2025-04-29,West,No,0.82
+198,54,F,Breast Cancer,Critical,Chemotherapy,D220,Oncology,Yes,20,53000,162000,6,Yes,Under Observation,2025-04-19,2025-05-09,East,No,0.91
+199,60,M,Heart Failure,High,Medication Monitoring,D101,Cardiology,Yes,11,23500,71000,6,Yes,Stable,2025-04-20,2025-05-01,Central,Yes,0.8
+200,51,F,Diabetes,Moderate,Insulin + Diet Plan,D205,Endocrinology,No,5,8700,24000,9,No,Stable,2025-04-21,2025-04-26,East,Yes,0.36
+201,67,M,Stroke,High,Rehabilitation,D102,Neurology,Yes,13,31000,94000,7,Yes,Recovered,2025-04-22,2025-05-05,North,No,0.86
+202,45,F,Skin Allergy,Mild,Allergen Therapy,D209,Dermatology,No,2,1400,6800,10,No,Stable,2025-04-23,2025-04-25,West,Yes,0.14
+203,69,M,Colon Cancer,Critical,Surgery + Chemo,D220,Oncology,Yes,22,56000,180000,6,Yes,Stable,2025-04-24,2025-05-16,East,No,0.94
+204,53,F,Lung Infection,High,Antibiotic Course,D210,Pulmonology,Yes,11,11500,33500,7,Yes,Recovered,2025-04-25,2025-05-06,North,Yes,0.78
+205,39,M,Back Pain,Moderate,Physiotherapy,D208,Orthopedics,No,6,3700,15500,8,No,Stable,2025-04-26,2025-05-02,West,Yes,0.35
+206,75,F,Heart Disease,Critical,Pacemaker Implant,D101,Cardiology,Yes,18,49000,137000,5,Yes,Recovered,2025-04-27,2025-05-15,Central,No,0.93
+207,61,M,Liver Cirrhosis,High,Liver Therapy,D214,Gastroenterology,Yes,12,27500,87000,7,Yes,Stable,2025-04-28,2025-05-10,West,Yes,0.85
+208,36,F,Depression,Moderate,CBT Sessions,D218,Psychiatry,Yes,9,6100,25500,8,Yes,Stable,2025-04-29,2025-05-08,East,Yes,0.41
+209,50,M,Arthritis,Moderate,Physiotherapy,D208,Orthopedics,No,7,5300,19500,9,No,Stable,2025-04-30,2025-05-07,West,Yes,0.37
+210,73,F,Heart Failure,High,Medication Care,D101,Cardiology,Yes,11,22500,72000,6,Yes,Stable,2025-05-01,2025-05-12,Central,No,0.82
+211,58,M,Chronic Kidney Disease,High,Dialysis,D212,Nephrology,Yes,13,31000,87000,7,Yes,Stable,2025-05-02,2025-05-15,North,Yes,0.8
+212,31,F,Anemia,Mild,Iron Supplements,D207,Internal Medicine,No,3,2100,9200,9,No,Stable,2025-05-03,2025-05-06,West,Yes,0.15
+213,65,M,Heart Disease,High,Angioplasty,D101,Cardiology,Yes,12,25500,79000,7,Yes,Stable,2025-05-04,2025-05-16,Central,Yes,0.86
+214,44,F,Diabetes,Moderate,Insulin Therapy,D205,Endocrinology,No,5,8300,22500,9,No,Stable,2025-05-05,2025-05-10,East,Yes,0.38
+215,70,M,Stroke,High,Clot Removal Surgery,D102,Neurology,Yes,14,32500,97000,6,Yes,Recovered,2025-05-06,2025-05-20,North,No,0.9
+216,37,F,Asthma,Mild,Bronchodilator Therapy,D210,Pulmonology,No,3,4100,12500,9,No,Stable,2025-05-07,2025-05-10,East,Yes,0.18
+217,49,M,Liver Disease,High,Liver Detox,D214,Gastroenterology,Yes,11,28500,88000,7,Yes,Stable,2025-05-08,2025-05-19,West,No,0.83
+218,55,F,Breast Cancer,Critical,Chemotherapy,D220,Oncology,Yes,20,53000,162000,6,Yes,Under Observation,2025-05-09,2025-05-29,East,No,0.92
+219,61,M,Heart Failure,High,Medication Monitoring,D101,Cardiology,Yes,11,23500,71000,6,Yes,Stable,2025-05-10,2025-05-21,Central,Yes,0.81
+220,52,F,Diabetes,Moderate,Insulin + Diet Plan,D205,Endocrinology,No,5,8700,24000,9,No,Stable,2025-05-11,2025-05-16,East,Yes,0.37
+221,66,M,Stroke,High,Rehabilitation,D102,Neurology,Yes,13,31000,94000,7,Yes,Recovered,2025-05-12,2025-05-25,North,No,0.88
+222,46,F,Skin Allergy,Mild,Allergen Therapy,D209,Dermatology,No,2,1400,6800,10,No,Stable,2025-05-13,2025-05-15,West,Yes,0.15
+223,70,M,Colon Cancer,Critical,Surgery + Chemo,D220,Oncology,Yes,22,56000,180000,6,Yes,Stable,2025-05-14,2025-06-05,East,No,0.95
+224,54,F,Lung Infection,High,Antibiotic Course,D210,Pulmonology,Yes,11,11500,33500,7,Yes,Recovered,2025-05-15,2025-05-26,North,Yes,0.81
+225,40,M,Back Pain,Moderate,Physiotherapy,D208,Orthopedics,No,6,3700,15500,8,No,Stable,2025-05-16,2025-05-22,West,Yes,0.36
+226,76,F,Heart Disease,Critical,Pacemaker Implant,D101,Cardiology,Yes,18,49000,137000,5,Yes,Recovered,2025-05-17,2025-06-04,Central,No,0.94
+227,62,M,Liver Cirrhosis,High,Liver Therapy,D214,Gastroenterology,Yes,12,27500,87000,7,Yes,Stable,2025-05-18,2025-05-30,West,Yes,0.86
+228,38,F,Depression,Moderate,CBT Sessions,D218,Psychiatry,Yes,9,6100,25500,8,Yes,Stable,2025-05-19,2025-05-28,East,Yes,0.44
+229,51,M,Arthritis,Moderate,Physiotherapy,D208,Orthopedics,No,7,5300,19500,9,No,Stable,2025-05-20,2025-05-27,West,Yes,0.39
+230,74,F,Heart Failure,High,Medication Care,D101,Cardiology,Yes,11,22500,72000,6,Yes,Stable,2025-05-21,2025-06-01,Central,No,0.83
+231,59,M,Chronic Kidney Disease,High,Dialysis,D212,Nephrology,Yes,13,31000,87000,7,Yes,Stable,2025-05-22,2025-06-04,North,Yes,0.81
+232,32,F,Anemia,Mild,Iron Supplements,D207,Internal Medicine,No,3,2100,9200,9,No,Stable,2025-05-23,2025-05-26,West,Yes,0.17
+233,68,M,Heart Disease,High,Angioplasty,D101,Cardiology,Yes,12,25500,79000,7,Yes,Stable,2025-05-24,2025-06-05,Central,Yes,0.87
+234,45,F,Diabetes,Moderate,Insulin Therapy,D205,Endocrinology,No,5,8300,22500,9,No,Stable,2025-05-25,2025-05-30,East,Yes,0.39
+235,71,M,Stroke,High,Clot Removal Surgery,D102,Neurology,Yes,14,32500,97000,6,Yes,Recovered,2025-05-26,2025-06-09,North,No,0.91
+236,36,F,Asthma,Mild,Bronchodilator Therapy,D210,Pulmonology,No,3,4100,12500,9,No,Stable,2025-05-27,2025-05-30,East,Yes,0.19
+237,50,M,Liver Disease,High,Liver Detox,D214,Gastroenterology,Yes,11,28500,88000,7,Yes,Stable,2025-05-28,2025-06-08,West,No,0.85
+238,56,F,Breast Cancer,Critical,Chemotherapy,D220,Oncology,Yes,20,53000,162000,6,Yes,Under Observation,2025-05-29,2025-06-18,East,No,0.93
+239,62,M,Heart Failure,High,Medication Monitoring,D101,Cardiology,Yes,11,23500,71000,6,Yes,Stable,2025-05-30,2025-06-10,Central,Yes,0.82
+240,53,F,Diabetes,Moderate,Insulin + Diet Plan,D205,Endocrinology,No,5,8700,24000,9,No,Stable,2025-05-31,2025-06-05,East,Yes,0.38
