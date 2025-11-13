@@ -16,7 +16,7 @@ This project was created to solve exactly that.
 **AI Insights & Analytics Engine** transforms static CSV files into **interactive dashboards** and **AI-assisted analytics systems** using:
 - 💬 **Natural language queries**
 - 📈 **Intelligent visualizations**
-- 🧠 **GPT-powered reasoning**
+- 🧠 **OpenAI-powered reasoning**
 
 ### 🔍 Problem It Solves
 Hospitals and businesses often rely on traditional BI tools that:
@@ -31,7 +31,7 @@ This app replaces those limitations with an **AI analyst** that:
 - Explains data in plain English — instantly
 
 ### 🧠 Intelligent Hybrid Design
-The system merges the **power of AI (OpenAI GPT)** with **structured analytics (Pandas, Plotly)** for:
+The system merges the **power of AI (OpenAI)** with **structured analytics (Pandas, Plotly)** for:
 - Data summarization  
 - Trend detection  
 - Predictive recommendations  
@@ -91,7 +91,7 @@ While optimized for medical data, the system is **Dyanmic-domain-agnostic** — 
 |-----------|-------------------|
 | **Frontend** | Streamlit |
 | **Backend** | FastAPI, Uvicorn |
-| **AI / NLP** | OpenAI GPT-4 |
+| **AI / NLP** | OpenAI gpt-4o-mini |
 | **Data Handling** | Pandas, NumPy |
 | **Visualization** | Plotly |
 | **Environment** | Python 3.9+, dotenv |
